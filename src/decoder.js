@@ -19,10 +19,10 @@ var VorbisDecoder = AV.Decoder.extend(function() {
     var self = this;
     var offset = self.outbuf >> 2;
     
-    this.callback = Vorbis.Runtime.addFunction(function(len) {
+    this.callback = Vorbis.addFunction(function(len) {
       var samples = Vorbis.HEAPF32.subarray(offset, offset + len);
       self.decodedBuffer = new Float32Array(samples);
-    });
+    }, 'vi');
   };
   
   this.prototype.readChunk = function() {
@@ -50,7 +50,7 @@ var VorbisDecoder = AV.Decoder.extend(function() {
     Vorbis._free(this.buf);
     Vorbis._free(this.outbuf);
     Vorbis._VorbisDestroy(this.vorbis);
-    Vorbis.Runtime.removeFunction(this.callback);
+    Vorbis.removeFunction(this.callback);
     
     this.buf = null;
     this.outbuf = null;
