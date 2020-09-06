@@ -50,5 +50,5 @@ emmake make install
 # compile wrapper
 cd ..
 mkdir -p build
-emcc -O3 -s SINGLE_FILE=1 -s WASM=1 -s RESERVED_FUNCTION_POINTERS=50 -s EXPORTED_FUNCTIONS="['_VorbisInit', '_VorbisHeaderDecode', '_VorbisGetChannels', '_VorbisGetSampleRate', '_VorbisGetNumComments', '_VorbisGetComment', '_VorbisDecode', '_VorbisDestroy', '_malloc', '_realloc', '_free']" -s EXTRA_EXPORTED_RUNTIME_METHODS=["cwrap"] -I libogg/include -Llibogg/lib -logg -I libvorbis/include -Llibvorbis/build/lib -lvorbis src/vorbis.c -o build/libvorbis.js
+emcc -O3 -s SINGLE_FILE=1 -s WASM=1 -s RESERVED_FUNCTION_POINTERS=50 -s EXPORTED_FUNCTIONS="['_VorbisInit', '_VorbisHeaderDecode', '_VorbisGetChannels', '_VorbisGetSampleRate', '_VorbisGetNumComments', '_VorbisGetComment', '_VorbisDecode', '_VorbisDestroy', '_malloc', '_realloc', '_free']" -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap", "addFunction", "removeFunction"]' -I libogg/include -Llibogg/lib -logg -I libvorbis/include -Llibvorbis/build/lib -lvorbis src/vorbis.c -o build/libvorbis.js
 echo "module.exports = Module" >> build/libvorbis.js
